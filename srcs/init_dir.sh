@@ -6,6 +6,7 @@ ENV_FILE="srcs/.env"
 if [ "$(uname)" == "Darwin" ]; then
     # macOS
     BASE_DIR="/Users/sujin/data"
+    # BASE_DIR="/Users/$USER/data"
 else
     # Linux
     BASE_DIR="/home/$USER/data"
@@ -14,7 +15,7 @@ fi
 if [ "$1" == "--delete" ]; then
     echo "Deleting volume..."
     rm -rf "$BASE_DIR"
-    echo "Delete COMPLETE!!!"
+    echo "Delete COMPLETE"
 
     if [ -f "$ENV_FILE" ]; then
         sed -i '' '/^DATA_PATH=/d' "$ENV_FILE"
@@ -28,7 +29,7 @@ if [ ! -d "$BASE_DIR" ]; then
     echo "Add volumes..."
 	mkdir -p $BASE_DIR/wordpress/
 	mkdir -p $BASE_DIR/mariadb/
-    echo "Add COMPLETE!!!"
+    echo "Add COMPLETE"
 fi
 
 if ! grep -q "DATA_PATH=" srcs/.env; then

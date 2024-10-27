@@ -7,6 +7,9 @@ ARG VERSION=7.4
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 php${VERSION}-fpm \
 php${VERSION}-mysql \
+php-mbstring \
+php-xml \
+php-json \
 wget \
 curl \
 unzip \
@@ -14,6 +17,8 @@ mariadb-client \
 && apt-get clean
 
 COPY ./tools/setup_wordpress.sh /setup_wordpress.sh
+
+# COPY ./conf/www.conf /etc/php8/php-fpm.d/www.conf
 
 # wp-cli 설치
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
@@ -28,10 +33,13 @@ RUN mkdir -p /var/www/html/ && \
     tar -xzf latest.tar.gz && \
     rm latest.tar.gz && \
     chmod 755 /var/www/html/wordpress
+    # chmod 755 /var/www/html/
 
     # WordPress 파일 소유자 및 권한 설정
 RUN chown -R www-data:www-data /var/www/html/wordpress && \
     chmod -R 755 /var/www/html/wordpress
+# RUN chown -R www-data:www-data /var/www/html/ && \
+#     chmod -R 755 /var/www/html/
 
     # PHP-FPM 설정 변경 (www.conf)
 RUN sed -i "s/listen =.*/listen = 9000/" /etc/php/${VERSION}/fpm/pool.d/www.conf

@@ -29,14 +29,20 @@ fi
 wp core install \
   --allow-root \
   --url=$DOMAIN \
-  --title=$TITLE \
+  --title=$WORDPRESS_TITLE \
   --admin_user=$WORDPRESS_ADMIN_USER \
   --admin_password=$WORDPRESS_ADMIN_PASSWORD \
   --admin_email=$WORDPRESS_ADMIN_EMAIL \
+  --path=/var/www/html/wordpress \
   --locale=ko_KR
 
 # 추가 사용자 생성
-wp user create $WORDPRESS_USER $WORDPRESS_USER_EMAIL --user_pass=$WORDPRESS_USER_PASSWORD --allow-root
+wp user create \
+  $WORDPRESS_USER \
+  $WORDPRESS_USER_EMAIL \
+  --user_pass=$WORDPRESS_USER_PASSWORD \
+  --path=/var/www/html/wordpress \
+  --allow-root
 
 # PHP-FPM을 포그라운드에서 실행
 exec php-fpm7.4 -F
