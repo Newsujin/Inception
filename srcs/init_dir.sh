@@ -9,7 +9,7 @@ if [ "$(uname)" == "Darwin" ]; then
     # BASE_DIR="/Users/$USER/data"
 else
     # Linux
-    BASE_DIR="/home/$USER/data"
+    BASE_DIR="/home/$USER/data" # spark2 대신 root로 설정될 수 있으니 hard-coding 고려
 fi
 
 if [ "$1" == "--delete" ]; then

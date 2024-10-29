@@ -32,8 +32,8 @@ RUN mkdir -p /var/www/html/ && \
     wget https://wordpress.org/latest.tar.gz && \
     tar -xzf latest.tar.gz && \
     rm latest.tar.gz && \
-    chmod 755 /var/www/html/wordpress
-    # chmod 755 /var/www/html/
+    # chmod -R 755 /var/www/html/wordpress
+    chmod 755 /var/www/html/
 
     # WordPress 파일 소유자 및 권한 설정
 RUN chown -R www-data:www-data /var/www/html/wordpress && \
