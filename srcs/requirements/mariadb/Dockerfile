@@ -20,5 +20,3 @@ RUN chmod +x /init_mariadb.sh
 
 # MariaDB 서버 시작 및 초기화를 위한 ENTRYPOINT 설정
 ENTRYPOINT [ "/init_mariadb.sh" ]
-
-CMD [ "mysqld" ]

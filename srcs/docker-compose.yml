@@ -1,223 +1,71 @@
-# 최적화 코드
-
-# services:
-#   mariadb:
-#     build:
-#       context: ./requirements/mariadb
-#     image: mariadb
-#     container_name: mariadb
-#     restart: always
-#     init: true
-#     env_file:
-#       - .env
-#     networks:
-#       - inception-network
-#     volumes:
-#       - mariadb:/var/lib/mysql
-
-#   wordpress:
-#     build:
-#       context: ./requirements/wordpress
-#     image: wordpress
-#     container_name: wordpress
-#     restart: always
-#     init: true
-#     depends_on:
-#       - mariadb
-#     env_file:
-#       - .env
-#     networks:
-#       - inception-network
-#     volumes:
-#       - wordpress:/var/www/html/wordpress
-
-#   nginx:
-#     build:
-#       context: ./requirements/nginx
-#     image: nginx
-#     container_name: nginx
-#     restart: always
-#     init: true
-#     depends_on:
-#       - wordpress
-#     networks:
-#       - inception-network
-#     volumes:
-#       - wordpress:/var/www/html/wordpress
-#     ports:
-#       - "443:443"
-
-# volumes:
-#   mariadb:
-#     name: mariadb
-#     driver: local
-#     driver_opts:
-#       type: none
-#       o: bind
-#       device: ${DATA_PATH}/mariadb
-
-#   wordpress:
-#     name: wordpress
-#     driver: local
-#     driver_opts:
-#       type: none
-#       o: bind
-#       device: ${DATA_PATH}/wordpress
-
-# networks:
-#   inception-network:
-#     name: inception-network
-#     driver: bridge
-
-
-# 연재님 코드
-
-# services:
-#   mariadb:
-#     container_name: mariadb
-#     restart: always
-#     build:
-#       context: ./requirements/mariadb
-#     volumes:
-#       - mariadb:/var/lib/mysql
-#     env_file:
-#       - .env
-#     networks:
-#       - inception-network
-#     image: mariadb
-#     pull_policy: never
-#     init: true
-
-#   wordpress:
-#     container_name: wordpress
-#     restart: always
-#     build:
-#       context: ./requirements/wordpress
-#     volumes:
-#       - wordpress:/var/www/html/wordpress/
-#     env_file:
-#       - .env
-#     networks:
-#       - inception-network
-#     depends_on:
-#       - mariadb
-#     image: wordpress
-#     pull_policy: never
-
-#   nginx:
-#     container_name: nginx
-#     restart: always
-#     build:
-#       context: ./requirements/nginx
-#       args:
-#         - CERT_KEY=${CERT_KEY}
-#         - CERT_CRT=${CERT_CRT}
-#     volumes:
-#       - wordpress:/var/www/html/wordpress
-#     ports:
-#       - "443:443"
-#     networks:
-#       - inception-network
-#     depends_on:
-#       - wordpress
-#     image: nginx
-#     pull_policy: never
-
-# volumes:
-#   mariadb:
-#     name: mariadb
-#     driver: local
-#     driver_opts:
-#       device: ${DATA_PATH}/mariadb
-#       type: none
-#       o: bind
-
-#   wordpress:
-#     name: wordpress
-#     driver: local
-#     driver_opts:
-#       device: ${DATA_PATH}/wordpress
-#       type: none
-#       o: bind
-
-# networks:
-#   inception-network:
-#     driver: bridge
-
-
-# 나의 깃헙 코드
-
 services:
   mariadb:
-    container_name: mariadb
-    restart: always
     build:
       context: ./requirements/mariadb
-    volumes:
-      - mariadb:/var/lib/mysql
-    env_file:
-      - .env
-    networks:
-      - inception-network
     image: mariadb
     pull_policy: never
-    init: true
-
-  wordpress:
-    container_name: wordpress
+    container_name: mariadb
     restart: always
-    build:
-      context: ./requirements/wordpress
-    volumes:
-      - wordpress:/var/www/html/wordpress/
+    init: true
     env_file:
       - .env
     networks:
       - inception-network
-    depends_on:
-      - mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
+
+  wordpress:
+    build:
+      context: ./requirements/wordpress
     image: wordpress
     pull_policy: never
-    # init: true
+    container_name: wordpress
+    restart: always
+    init: true
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
+    networks:
+      - inception-network
+    volumes:
+      - wordpress:/var/www/html/wordpress
 
   nginx:
-    container_name: nginx
-    restart: always
     build:
       context: ./requirements/nginx
-      # args:
-      #   - CERT_KEY=${CERT_KEY}
-      #   - CERT_CRT=${CERT_CRT}
+    image: nginx
+    pull_policy: never
+    container_name: nginx
+    restart: always
+    init: true
+    depends_on:
+      - wordpress
+    networks:
+      - inception-network
     volumes:
       - wordpress:/var/www/html/wordpress
     ports:
       - "443:443"
-    networks:
-      - inception-network
-    depends_on:
-      - wordpress
-    image: nginx
-    pull_policy: never
-    # init: true
 
 volumes:
   mariadb:
     name: mariadb
     driver: local
     driver_opts:
-      device: ${DATA_PATH}/mariadb
       type: none
       o: bind
+      device: ${DATA_PATH}/mariadb
 
   wordpress:
     name: wordpress
     driver: local
     driver_opts:
-      device: ${DATA_PATH}/wordpress
       type: none
       o: bind
+      device: ${DATA_PATH}/wordpress
 
 networks:
   inception-network:
-    # name: inception-network
+    name: inception-network
     driver: bridge

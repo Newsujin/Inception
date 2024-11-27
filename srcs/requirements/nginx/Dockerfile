@@ -18,4 +18,4 @@ COPY ./tools/init_nginx.sh /init_nginx.sh
 RUN chmod +x /init_nginx.sh
 
 # init_nginx.sh 실행
-CMD ["/init_nginx.sh"]
+ENTRYPOINT [ "/init_nginx.sh" ]

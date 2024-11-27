@@ -1,29 +1,27 @@
-SRCS = srcs
-
 all: prepare
 	@echo "🚀 Starting all services..."
-	@docker compose -f ${SRCS}/docker-compose.yml up -d
+	@docker compose -f srcs/docker-compose.yml up -d
 
 build: prepare
 	@echo "🔨 Building and starting all services..."
-	@docker compose -f ${SRCS}/docker-compose.yml up -d --build
+	@docker compose -f srcs/docker-compose.yml up -d --build
 
 prepare:
 	@echo "🔧 Preparing environment..."
-	@chmod +x ${SRCS}/init.sh
-	@./${SRCS}/init.sh
+	@chmod +x srcs/init.sh
+	@./srcs/init.sh
 
 re: fclean all
 	@echo "🔄 Rebuilding all services..."
 
 clean:
 	@echo "🛑 Stopping all services..."
-	@docker compose -f ${SRCS}/docker-compose.yml down -v
+	@docker compose -f srcs/docker-compose.yml down -v
 
 fclean: clean
 	@echo "🧹 Force removing all Docker resources..."
 	@docker system prune --force --all
-	@chmod +x ${SRCS}/init.sh
-	@./$(SRCS)/init.sh --delete
+	@chmod +x srcs/init.sh
+	@./srcs/init.sh --delete
 
 .PHONY: all build down re clean fclean prepare
