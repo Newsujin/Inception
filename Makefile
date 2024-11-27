@@ -24,4 +24,4 @@ fclean: clean
 	@chmod +x srcs/init.sh
 	@./srcs/init.sh --delete
 
-.PHONY: all build down re clean fclean prepare
+.PHONY: all build prepare re clean fclean

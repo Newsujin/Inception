@@ -48,13 +48,14 @@ services:
     ports:
       - "443:443"
 
+
 volumes:
   mariadb:
     name: mariadb
     driver: local
     driver_opts:
       type: none
-      o: bind
+      o: bind, rw
       device: ${DATA_PATH}/mariadb
 
   wordpress:
@@ -62,8 +63,9 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      o: bind
+      o: bind, rw
       device: ${DATA_PATH}/wordpress
+
 
 networks:
   inception-network:

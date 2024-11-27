@@ -8,6 +8,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Nginx 설정 파일 백업
+RUN mkdir -p /var/www/html/wordpress/ /var/log/nginx /var/run/nginx && \
+    chmod -R 755 /var/www/html && \
+    chown -R www-data:www-data /var/www/html /var/log/nginx /var/run/nginx
+
 # Nginx 설정 파일 복사
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 
