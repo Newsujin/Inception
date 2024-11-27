@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ENV_FILE="srcs/.env"
 
@@ -11,6 +11,7 @@ fi
 
 # 볼륨 삭제
 if [ "$1" == "--delete" ]; then
+    chmod -R 777 $BASE_DIR
     rm -rf "$BASE_DIR"
     echo "Volumes deleted."
 
