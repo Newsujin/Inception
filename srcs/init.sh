@@ -11,13 +11,13 @@ fi
 
 # 볼륨 삭제
 if [ "$1" == "--delete" ]; then
-    chmod -R 777 $BASE_DIR
+    sudo chmod -R 777 $BASE_DIR
     rm -rf "$BASE_DIR"
     echo "Volumes deleted."
 
     # .env 파일에서 DATA_PATH 제거
     if [ -f "$ENV_FILE" ]; then
-        sed -i '' '/^DATA_PATH=/d' "$ENV_FILE"
+        sed -i '/^DATA_PATH=/d' "$ENV_FILE"
         echo "Removed DATA_PATH from .env file."
     else
         echo ".env file not found. Skipping DATA_PATH removal."
