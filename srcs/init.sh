@@ -27,9 +27,8 @@ fi
 
 # 볼륨 디렉토리 생성
 if [ ! -d "$BASE_DIR" ]; then
-    echo "Creating volumes in $BASE_DIR..."
-	mkdir -p $BASE_DIR/wordpress/
-	mkdir -p $BASE_DIR/mariadb/
+    mkdir -p $BASE_DIR/wordpress/
+    mkdir -p $BASE_DIR/mariadb/
     chown -R $USER:$USER $BASE_DIR
     chmod -R 777 $BASE_DIR
     echo "Volumes created."

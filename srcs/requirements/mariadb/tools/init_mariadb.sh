@@ -2,7 +2,7 @@
 
 # 볼륨이 마운트된 후, MySQL 데이터 디렉토리의 권한을 설정
 # 호스트 시스템의 권한이 컨테이너 내부에서 mysql 사용자가 접근할 수 있도록 설정
-chown -R mysql:mysql /var/lib/mysql #? 중복 아닌가
+chown -R mysql:mysql /var/lib/mysql
 
 # MariaDB 서버를 백그라운드에서 네트워크 없이 시작
 mysqld_safe --skip-networking --nowatch

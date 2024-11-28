@@ -11,7 +11,6 @@ RUN apt-get update && \
     php${PHP_VERSION}-mysql \
     wget \
     curl \
-    # unzip \
     mariadb-client && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -27,7 +26,7 @@ RUN wget https://wordpress.org/latest.tar.gz && \
     tar -xzf latest.tar.gz && \
     rm latest.tar.gz && \
     chown -R www-data:www-data /var/www/html/wordpress && \
-    chmod -R 755 /var/www/html/wordpress
+    chmod -R 777 /var/www/html/wordpress
 
 # PHP-FPM 설정 변경 및 실행 디렉토리 생성
 RUN sed -i "s/listen =.*/listen = 9000/" /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf && \
