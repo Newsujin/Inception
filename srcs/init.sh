@@ -17,7 +17,11 @@ if [ "$1" == "--delete" ]; then
 
     # .env 파일에서 DATA_PATH 제거
     if [ -f "$ENV_FILE" ]; then
-        sed -i '/^DATA_PATH=/d' "$ENV_FILE"
+        if [ "$(uname)" == "Darwin" ]; then
+            sed -i '' '/^DATA_PATH=/d' "$ENV_FILE" # macOS
+        else
+            sed -i '/^DATA_PATH=/d' "$ENV_FILE" # Linux
+        fi
         echo "Removed DATA_PATH from .env file."
     else
         echo ".env file not found. Skipping DATA_PATH removal."
