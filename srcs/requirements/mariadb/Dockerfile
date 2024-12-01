@@ -1,4 +1,3 @@
-# Debian 기반 이미지 사용
 FROM debian:bullseye
 
 # MariaDB 설치
@@ -9,7 +8,7 @@ RUN apt-get update && \
 # MariaDB 설정 파일 복사
 COPY ./conf/mariadb.cnf /etc/mysql/my.cnf
 
-# 디렉토리 생성 및 권한 설정 (소켓 및 로그 파일)
+# 필수 디렉토리 생성 및 권한 설정
 RUN mkdir -p /var/run/mysqld /var/lib/mysql /var/log/mysql && \
     chown -R mysql:mysql /var/run/mysqld /var/lib/mysql /var/log/mysql && \
     chmod 777 /var/run/mysqld /var/lib/mysql /var/log/mysql
@@ -18,5 +17,5 @@ RUN mkdir -p /var/run/mysqld /var/lib/mysql /var/log/mysql && \
 COPY ./tools/init_mariadb.sh /init_mariadb.sh
 RUN chmod +x /init_mariadb.sh
 
-# 초기화를 위한 ENTRYPOINT 설정
+# 초기화 스크립트 실행
 ENTRYPOINT [ "/init_mariadb.sh" ]

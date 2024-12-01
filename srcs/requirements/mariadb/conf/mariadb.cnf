@@ -1,24 +1,21 @@
-# mariadb.cnf
 [mysqld]
 
-# 사용자 설정
+# 사용자 및 포트 설정
 user=mysql
-
-# 포트 설정
 port=3306
 
 # 모든 네트워크 인터페이스에서의 연결을 허용하도록 설정
 bind-address=0.0.0.0
 
-# 데이터 디렉토리 설정
+# 데이터 저장 디렉토리
 datadir=/var/lib/mysql
 
-# 메모리 및 캐시 설정
+# 메모리 및 패킷 크기 설정
 key_buffer_size=16M
 max_allowed_packet=16M
 
-# 로그 설정
+# 로그 파일 경로
 log-error=/var/log/mysql/error.log
 
-# 인증 설정
+# 소켓 파일 경로
 socket=/var/run/mysqld/mysqld.sock
