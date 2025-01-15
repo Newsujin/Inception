@@ -21,7 +21,6 @@ services:
     pull_policy: never
     container_name: wordpress
     restart: always
-    init: true
     depends_on:
       - mariadb
     env_file:
@@ -38,7 +37,6 @@ services:
     pull_policy: never
     container_name: nginx
     restart: always
-    init: true
     depends_on:
       - wordpress
     networks:
