@@ -293,6 +293,13 @@ Docker 컨테이너 간의 통신을 관리하고 격리하기 위한 도커의 
 | 목적          | 컨테이너 실행 시 기본 명령어 설정          | 고정 명령어 설정 후 추가 인자를 받을 수 있음|
 | 유연성        | 단순한 명령어 실행에 적합                 | 명령어를 고정하고 추가 인자 전달 가능       |
 
+**결합 사용 예시**:
+```bash
+ENTRYPOINT ["nginx"]
+CMD ["-g", "daemon off;"]
+```
+- docker run 시 CMD는 ENTRYPOINT의 기본 인자처럼 동작.
+
 ### 효율적인 Dockerfile 작성법 (빌드 캐시 최적화)
 - 자주 변경되는 명령어는 Dockerfile **하단에 작성** (캐시 활용)
 - 불필요한 파일을 제거하여 Docker 이미지 크기 최소화
@@ -308,13 +315,14 @@ Docker 컨테이너 간의 통신을 관리하고 격리하기 위한 도커의 
 ### 개념
 웹 서버, 리버스 프록시, 로드 밸런서 등 다방면으로 활용 가능한 고성능 오픈소스 소프트웨어
 
-### 특징
+### 역할
+1. 클라이언트로부터 요청을 받았을 때 요청에 맞는 **정적 파일을 응답**해주는 `HTTP Web Server`로 활용
+2. `Reverse Proxy Server`로 활용하여 WAS 서버의 부하를 줄일 수 있는 **로드 밸런서**로 활용
+
+### 설정
 1.	**TLSv1.2/1.3 설정**: nginx.conf의 ssl_protocols 지시자에서 확인할 수 있음.
-
 2.	**nginx.conf 작성**: Dockerfile에서 COPY ./conf/nginx.conf /etc/nginx/nginx.conf로 복사, 실제 설정은 server { listen 443 ssl; ... } 등을 통해 443 포트만 사용함.
-
 3.	**SSL 인증서 생성**: init_nginx.sh 스크립트에서 OpenSSL을 통해 RSA 키와 인증서를 /etc/nginx/ssl 경로에 생성하고, nginx.conf에서 해당 파일 경로를 참조.
-
 4.	**443 포트만 접속**: server { listen 443 ssl; }에 의해 HTTP 80번 포트가 아닌 **443번 포트**로만 연결 가능.
 
 **웹서버란?**
@@ -394,10 +402,3 @@ PHP FastCGI Process Manager의 약자로, PHP를 실행하기 위한 고성능 F
         ```bash
         CMD ["nginx", "-g", "daemon off;"]
         ```
-
-**결합 사용 예시**:
-```bash
-ENTRYPOINT ["nginx"]
-CMD ["-g", "daemon off;"]
-```
-- docker run 시 CMD는 ENTRYPOINT의 기본 인자처럼 동작.
